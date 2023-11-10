@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - main
+      
+permissions: write-all
 
 jobs:
   release:
@@ -22,8 +24,8 @@ jobs:
           helm repo add traefik https://traefik.github.io/charts
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
+        uses: helm/chart-releaser-action@v1.6.0 
         env:
-          CR_TOKEN: "${{ secrets.GH_TOKEN }}"
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           CR_SKIP_EXISTING: "true" # Do not repackage charts if they already exist
 
