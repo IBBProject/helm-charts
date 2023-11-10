@@ -1,0 +1,18 @@
+apiVersion: v1
+entries:
+  ibb-traefik:
+  - apiVersion: v2
+    appVersion: 2.10.0
+    created: "2023-11-10T04:18:29.389282505Z"
+    dependencies:
+    - name: traefik
+      repository: https://traefik.github.io/charts
+      version: 24.0.0
+    description: Traefik Deployment for an IBB
+    digest: 861cb566686183e23fddd24479f5b1e763f88414bfc32b41d39a5db102f30147
+    name: ibb-traefik
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/ibb-traefik-0.2.0/ibb-traefik-0.2.0.tgz
+    version: 0.2.0
+generated: "2023-11-10T04:18:29.389289005Z"
