@@ -3,7 +3,7 @@ traefik:
     dashboard: true
 
   additionalArguments:
-  - "--log.level=DEBUG"
+  - "--log.level=INFO"
 
   ports:
     n4-platform:
