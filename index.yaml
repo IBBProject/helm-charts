@@ -1,5 +1,16 @@
 apiVersion: v1
 entries:
+  app01:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-11-10T20:16:58.465975228Z"
+    description: A Helm chart for Kubernetes
+    digest: 8c9adf6a69fd6c5db4cea91abb90bb932f2f04e1beee48dfced2d0e4b4ea88c7
+    name: app01
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/app01-0.1.0/app01-0.1.0.tgz
+    version: 0.1.0
   ibb-traefik:
   - apiVersion: v2
     appVersion: 2.10.0
@@ -15,4 +26,4 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-traefik-0.2.0/ibb-traefik-0.2.0.tgz
     version: 0.2.0
-generated: "2023-11-10T04:18:29.389289005Z"
+generated: "2023-11-10T20:16:58.465985917Z"
