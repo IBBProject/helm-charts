@@ -11,6 +11,17 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/app01-0.1.0/app01-0.1.0.tgz
     version: 0.1.0
+  edgex-ui-minnesota:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-12-26T21:16:51.19621776Z"
+    description: A Helm chart for Kubernetes
+    digest: 879b686b5f09d59aa72f3d27e8c462930ca48130ad1d2fadcb7d2fc9cc92a50e
+    name: edgex-ui-minnesota
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/edgex-ui-minnesota-0.1.0/edgex-ui-minnesota-0.1.0.tgz
+    version: 0.1.0
   ibb-traefik:
   - apiVersion: v2
     appVersion: 2.10.0
@@ -26,4 +37,4 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-traefik-0.2.0/ibb-traefik-0.2.0.tgz
     version: 0.2.0
-generated: "2023-11-10T20:16:58.465985917Z"
+generated: "2023-12-26T21:16:51.196229852Z"
