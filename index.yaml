@@ -22,6 +22,17 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/edgex-ui-minnesota-0.1.0/edgex-ui-minnesota-0.1.0.tgz
     version: 0.1.0
+  ibb-application:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-01-10T05:09:15.735019376Z"
+    description: A Helm chart for a generic IBB application
+    digest: 5784dd19389d30acb1cfe016efc206601322798da37dea96f1eeddca342de8ca
+    name: ibb-application
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/ibb-application-0.1.0/ibb-application-0.1.0.tgz
+    version: 0.1.0
   ibb-traefik:
   - apiVersion: v2
     appVersion: 2.10.0
@@ -37,4 +48,4 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-traefik-0.2.0/ibb-traefik-0.2.0.tgz
     version: 0.2.0
-generated: "2023-12-26T21:16:51.196229852Z"
+generated: "2024-01-10T05:09:15.735030386Z"
