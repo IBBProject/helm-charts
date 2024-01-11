@@ -1,0 +1,250 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "edge-central.fullname" . }}
+  labels:
+    {{- include "edge-central.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "edge-central.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "edge-central.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "edge-central.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        #
+        # ----- Core Command
+        #
+        {{- if .Values.coreCommand.enabled }}
+        - name: {{ .Values.coreCommand.name }}
+          image: {{ .Values.coreCommand.image }}:{{ .Values.coreCommand.tag }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          env:
+          # TODO: These are all shared variables, make them a shared block.
+          # TODO: Template these values
+          - name: EDGEX_SECURITY_SECRET_STORE
+            value: "{{ .Values.environment.EDGEX_SECURITY_SECRET_STORE }}"
+          - name: SERVICE_HOST
+            value: "127.0.0.1"
+          - name: MESSAGEQUEUE_INTERNAL_TYPE
+            value: "mqtt"
+          - name: MESSAGEQUEUE_INTERNAL_PROTOCOL
+            value: "mqtt"
+          - name: MESSAGEQUEUE_INTERNAL_HOST 
+            value: "127.0.0.1"
+          - name: MESSAGEQUEUE_INTERNAL_PORT
+            value: "1883"
+          - name: MESSAGEQUEUE_EXTERNAL_URL
+            value: "tcp://127.0.0.1:1883"
+          - name: CLIENTS_CORE_COMMAND_HOST
+            value: "127.0.0.1"
+          - name: CLIENTS_CORE_DATA_HOST
+            value: "127.0.0.1"
+          - name: CLIENTS_CORE_METADATA_HOST
+            value: "127.0.0.1"
+          - name: CLIENTS_CORE_KEEPER_HOST
+            value: "127.0.0.1"
+          - name: CLIENTS_SUPPORT_NOTIFICATIONS_HOST
+            value: "127.0.0.1"
+          - name: CLIENTS_SUPPORT_SCHEDULER_HOST
+            value: "127.0.0.1"
+          - name: CLIENTS_SYS_MGMT_AGENT_HOST
+            value: "127.0.0.1"
+          - name: DATABASES_PRIMARY_HOST
+            value: "127.0.0.1"
+          - name: MESSAGEQUEUE_TYPE
+            value: "mqtt"
+          - name: MESSAGEQUEUE_PROTOCOL
+            value: "mqtt"
+          - name: MESSAGEQUEUE_HOST
+            value: "127.0.0.1"
+          - name: MESSAGEQUEUE_PORT
+            value: "1883"
+          - name: REGISTRY_HOST
+            value: "127.0.0.1"
+          - name: REGISTRY_PORT
+            value: "59890"
+          - name: REGISTRY_TYPE
+            value: "keeper"
+          ports:
+            - name: http
+              containerPort: {{ .Values.coreCommand.port }}
+              protocol: TCP
+          livenessProbe: null # TODO:
+          readinessProbe: null # TODO:
+          volumeMounts:
+            - mountPath: "/edgexpert/licenses"
+              name: edgecentral-license
+              readOnly: true
+        {{- end }}
+        #
+        # ----- Core Data
+        #
+        {{- if .Values.coreData.enabled }}
+        - name: {{ .Values.coreData.name }}
+          image: {{ .Values.coreData.image }}:{{ .Values.coreData.tag }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          env:
+          - name: EDGEX_SECURITY_SECRET_STORE
+            value: "{{ .Values.environment.EDGEX_SECURITY_SECRET_STORE }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.coreData.port }}
+              protocol: TCP
+          livenessProbe: null # TODO:
+          readinessProbe: null # TODO:
+          volumeMounts:
+            - mountPath: "/edgexpert/licenses"
+              name: edgecentral-license
+              readOnly: true
+        {{- end }}
+        #
+        # ----- Core Keeper
+        #
+        {{- if .Values.coreKeeper.enabled }}
+        - name: {{ .Values.coreKeeper.name }}
+          image: {{ .Values.coreKeeper.image }}:{{ .Values.coreKeeper.tag }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          env:
+          - name: EDGEX_SECURITY_SECRET_STORE
+            value: "{{ .Values.environment.EDGEX_SECURITY_SECRET_STORE }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.coreKeeper.port }}
+              protocol: TCP
+          livenessProbe: null # TODO: 
+          readinessProbe: null # TODO:
+          volumeMounts:
+            - mountPath: "/edgexpert/licenses"
+              name: edgecentral-license
+              readOnly: true
+        {{- end }}
+        #
+        # ----- Core Metadata
+        #
+        {{- if .Values.coreMetadata.enabled }}
+        - name: {{ .Values.coreMetadata.name }}
+          image: {{ .Values.coreMetadata.image }}:{{ .Values.coreMetadata.tag }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          env:
+          - name: EDGEX_SECURITY_SECRET_STORE
+            value: "{{ .Values.environment.EDGEX_SECURITY_SECRET_STORE }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.coreMetadata.port }}
+              protocol: TCP
+          livenessProbe: null # TODO: 
+          readinessProbe: null # TODO: 
+          volumeMounts:
+            - mountPath: "/edgexpert/licenses"
+              name: edgecentral-license
+              readOnly: true
+        {{- end }}
+        #
+        # ----- Device Virtual
+        #
+        {{- if .Values.deviceVirtual.enabled }}
+        - name: {{ .Values.deviceVirtual.name }}
+          image: {{ .Values.deviceVirtual.image }}:{{ .Values.deviceVirtual.tag }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          env:
+          - name: EDGEX_SECURITY_SECRET_STORE
+            value: "{{ .Values.environment.EDGEX_SECURITY_SECRET_STORE }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.deviceVirtual.port }}
+              protocol: TCP
+          livenessProbe: null # TODO: 
+          readinessProbe: null # TODO: 
+          volumeMounts:
+            - mountPath: "/edgexpert/licenses"
+              name: edgecentral-license
+              readOnly: true
+        {{- end }}
+        #
+        # ----- MQTT
+        #
+        {{- if .Values.mqtt.enabled }}
+        - name: {{ .Values.mqtt.name }}
+          image: {{ .Values.mqtt.image }}:{{ .Values.mqtt.tag }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          command: [{{ .Values.mqtt.command | quote }}]
+          args: # TODO: 
+            - "-c"
+            - "/mosquitto-no-auth.conf"
+          ports:
+            - name: http
+              containerPort: {{ .Values.mqtt.port }}
+              protocol: TCP
+          livenessProbe: null # TODO: 
+          readinessProbe: null # TODO: 
+        {{- end }}
+        #
+        # ----- Redis
+        #
+        {{- if .Values.redis.enabled }}
+        - name: {{ .Values.redis.name }}
+          image: {{ .Values.redis.image }}:{{ .Values.redis.tag }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.redis.port }}
+              protocol: TCP
+          livenessProbe: null # TODO: 
+          readinessProbe: null # TODO:
+        {{- end }}
+        #
+        # ----- Xpert manager
+        #
+        {{- if .Values.xpertManager.enabled }}
+        - name: {{ .Values.xpertManager.name }}
+          image: {{ .Values.xpertManager.image }}:{{ .Values.xpertManager.tag }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          env:
+          - name: EDGEX_SECURITY_SECRET_STORE
+            value: "{{ .Values.environment.EDGEX_SECURITY_SECRET_STORE }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.xpertManager.port }}
+              protocol: TCP
+          livenessProbe: null # TODO: 
+          readinessProbe: null # TODO: 
+          volumeMounts:
+            - mountPath: "/edgexpert/licenses"
+              name: edgecentral-license
+              readOnly: true
+        {{- end }}
+      # -- END Containers
+      volumes:
+        - name: edgecentral-license
+          secret:
+            defaultMode: 420
+            secretName: {{ .Values.images.licenseSecretName }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
