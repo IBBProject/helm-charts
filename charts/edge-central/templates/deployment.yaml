@@ -13,11 +13,18 @@ spec:
       {{- include "edge-central.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+      {{- if .Values.ktunnel.enabled }}
+        injector.ktunnel.ibbproject.com/request: {{ .Values.ktunnel.sidecarConfig | quote }}
+      {{- end }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
+        {{- if .Values.ktunnel.enabled }}
+        injector.ktunnel.ibbproject.com/id: "{{ .Values.ktunnel.id }}"
+        injector.ktunnel.ibbproject.com/port: "{{ .Values.service.port }}"
+        {{- end }}
         {{- include "edge-central.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -236,6 +243,20 @@ spec:
           secret:
             defaultMode: 420
             secretName: {{ .Values.images.licenseSecretName }}
+      {{- if .Values.ktunnel.enabled }}
+        - name: kubeconfig
+          secret:
+            secretName: {{ .Values.ktunnel.kubeconfigSecretName }}
+        - name: podinfo
+          downwardAPI:
+            items:
+            - path: "labels"
+              fieldRef:
+                fieldPath: metadata.labels
+            - path: "annotations"
+              fieldRef:
+                fieldPath: metadata.annotations
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -8,6 +8,17 @@ images:
   pullPolicy: IfNotPresent
   licenseSecretName: edgecentral-license
 
+ktunnel:
+  enabled: false
+  # The Padi ID or Context ID
+  id: "ID"
+  # The name of the sidecar config from the ktunnel sidecar injector
+  # configuration
+  sidecarConfig: "ibb-ktunnel"
+  # The name of the secret on the cluster which holds the information
+  # on connecting to the upstream kubernetes cluster
+  kubeconfigSecretName: "kubeconfig"
+
 environment:
   EDGEX_SECURITY_SECRET_STORE: "false"
 
