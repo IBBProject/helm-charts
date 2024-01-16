@@ -15,12 +15,18 @@ spec:
       {{- if .Values.ktunnel.enabled }}
         injector.ktunnel.ibbproject.com/request: {{ .Values.ktunnel.sidecarConfig | quote }}
       {{- end }}
+      {{- if .Values.dapr.enabled }}
+        dapr.io/enabled: "true"
+        dapr.io/app-id: {{ .Values.dapr.appId |}}
+        dapr.io/app-port: {{ .Values.dapr.appPort | quote }}
+        dapr.io/log-level: {{ .Values.dapr.logLevel }}
+      {{- end }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
         {{- if .Values.ktunnel.enabled }}
-        injector.ktunnel.ibbproject.com/id: "{{ .Values.ktunnel.id }}"
+        injector.ktunnel.ibbproject.com/id: "{{ .Values.ktunnel.id | default .Chart.name }}"
         injector.ktunnel.ibbproject.com/port: "{{ .Values.service.port }}"
         {{- end }}
         {{- include "ibb-application.selectorLabels" . | nindent 8 }}
