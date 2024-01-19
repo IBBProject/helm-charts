@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ibb-application.fullname" . }}
+  labels:
+    {{- include "ibb-application.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "ibb-application.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+      {{- if .Values.ktunnel.enabled }}
+        injector.ktunnel.ibbproject.com/request: {{ .Values.ktunnel.sidecarConfig | quote }}
+      {{- end }}
+      {{- if .Values.cnsDapr.enabled }}
+        dapr.io/enabled: {{ .Values.cnsDapr.enabled | quote }}
+        dapr.io/app-id: {{ include "ibb-application.fullname" . | quote }}
+        dapr.io/app-port: {{ .Values.cnsDapr.appPort | quote }}
+        dapr.io/log-level: {{ .Values.cnsDapr.dapr.logLevel | quote }}
+      {{- end }}
+      {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- if .Values.ktunnel.enabled }}
+        injector.ktunnel.ibbproject.com/id: "{{ .Values.ktunnel.id }}"
+        injector.ktunnel.ibbproject.com/port: "{{ .Values.service.port }}"
+        {{- end }}
+        {{- include "ibb-application.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      # serviceAccountName: {{ include "ibb-application.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: CNS_DAPR
+            value: "{{ include "ibb-application.fullname" . }}"
+          - name: CNS_PUBSUB
+            value: "{{ .Values.cnsDapr.cnsPubsub }}"
+          - name: CNS_CONTEXT
+            value: "{{ .Values.cnsDapr.cnsContext }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+        {{- if .Values.cnsDapr.enabled }}
+        - name: cns-dapr
+          image: "{{ .Values.cnsDapr.image }}:{{ .Values.cnsDapr.imageTag }}"
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: CNS_CONTEXT
+            value: "{{ .Values.cnsDapr.cnsContext }}"
+          - name: CNS_TOKEN
+            value: "{{ .Values.cnsDapr.cnsToken }}"
+          - name: CNS_PUBSUB
+            value: "{{ .Values.cnsDapr.cnsPubsub }}"
+          - name: CNS_BROKER
+            value: "{{ .Values.cnsDapr.cnsBroker }}"
+          - name: DAPR_PORT
+            value: "{{ .Values.cnsDapr.dapr.port }}"
+        {{- end }}
+      {{- if .Values.ktunnel.enabled }}
+      volumes:
+        - name: kubeconfig
+          secret:
+            secretName: {{ .Values.ktunnel.kubeconfigSecretName }}
+        - name: podinfo
+          downwardAPI:
+            items:
+            - path: "labels"
+              fieldRef:
+                fieldPath: metadata.labels
+            - path: "annotations"
+              fieldRef:
+                fieldPath: metadata.annotations
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
