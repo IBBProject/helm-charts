@@ -25,6 +25,19 @@ ktunnel:
 environment:
   EDGEX_SECURITY_SECRET_STORE: "false"
 
+cnsDapr:
+  enabled: False
+  cnsContext: "CONTEXT"
+  cnsToken: "TOKEN"
+  image: "us-central1-docker.pkg.dev/padi-staging/public/cns-dapr"
+  name: "cns-dapr"
+  port: "3000"
+  tag: "latest"
+  cnsPubsub: "cns-pubsub"
+  cnsBroker: "padi"
+  daprPort: "3500"
+  daprLogLevel: "info"
+
 coreCommand:
   enabled: True
   image: "iotechsys/edgexpert-core-command"
@@ -59,6 +72,13 @@ deviceVirtual:
   name: "device-virtual"
   port: 59900
   tag: "2.3.5"
+
+nodeRed:
+  enabled: True
+  image: "nodered/node-red"
+  name: "nodered"
+  port: 1880
+  tag: "latest"
 
 mqtt:
   enabled: True

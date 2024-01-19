@@ -14,6 +14,13 @@ spec:
   template:
     metadata:
       annotations:
+      {{- if .Values.cnsDapr.enabled }}
+        dapr.io/enabled: "true"
+        # dapr.io/app-id: {{ .Values.cnsDapr.appId }}
+        dapr.io/app-id: {{ include "edge-central.fullname" . }}
+        dapr.io/app-port: {{ .Values.cnsDapr.port | quote }}
+        dapr.io/log-level: {{ .Values.cnsDapr.daprLogLevel }}
+      {{- end }}
       {{- if .Values.ktunnel.enabled }}
         injector.ktunnel.ibbproject.com/request: {{ .Values.ktunnel.sidecarConfig | quote }}
       {{- end }}
@@ -35,6 +42,25 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
+        #
+        # ----- CNS DAPR
+        #
+        {{- if .Values.cnsDapr.enabled }}
+        - name: {{ .Values.cnsDapr.name }}
+          image: {{ .Values.cnsDapr.image }}:{{ .Values.cnsDapr.tag }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          env:
+          - name: CNS_CONTEXT
+            value: "{{ .Values.cnsDapr.cnsContext }}"
+          - name: CNS_TOKEN
+            value: "{{ .Values.cnsDapr.cnsToken }}"
+          - name: CNS_PUBSUB
+            value: "{{ .Values.cnsDapr.cnsPubsub }}"
+          - name: CNS_BROKER
+            value: "{{ .Values.cnsDapr.cnsBroker }}"
+          - name: DAPR_PORT
+            value: "{{ .Values.cnsDapr.daprPort }}"
+        {{- end }}
         #
         # ----- Core Command
         #
@@ -202,6 +228,22 @@ spec:
           livenessProbe: null # TODO: 
           readinessProbe: null # TODO: 
         {{- end }}
+        #
+        # ----- Node Red
+        #
+        {{- if .Values.nodeRed.enabled }}
+        - name: {{ .Values.nodeRed.name }}
+          image: {{ .Values.nodeRed.image }}:{{ .Values.nodeRed.tag }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          command: [{{ .Values.nodeRed.command | quote }}]
+          ports:
+            - name: http
+              containerPort: {{ .Values.nodeRed.port }}
+              protocol: TCP
+          livenessProbe: null # TODO: 
+          readinessProbe: null # TODO: 
+        {{- end }}
+
         #
         # ----- Redis
         #
