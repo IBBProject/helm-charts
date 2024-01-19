@@ -18,9 +18,6 @@ ktunnel:
   # The name of the secret on the cluster which holds the information
   # on connecting to the upstream kubernetes cluster
   kubeconfigSecretName: "kubeconfig"
-  # The port of the pod that should be forwarded. Typically this is the port
-  # that the User Interface will run on
-  port: 8080
 
 environment:
   EDGEX_SECURITY_SECRET_STORE: "false"
