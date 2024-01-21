@@ -72,8 +72,10 @@ spec:
             value: "{{ .Values.cnsDapr.cnsPubsub }}"
           - name: CNS_BROKER
             value: "{{ .Values.cnsDapr.cnsBroker }}"
-          - name: DAPR_PORT
+          - name: CNS_DAPR_PORT
             value: "{{ .Values.cnsDapr.dapr.port }}"
+          - name: CNS_SERVER_PORT
+            value: "{{ .Values.cnsDapr.appPort }}"
         {{- end }}
       {{- if .Values.ktunnel.enabled }}
       volumes:
