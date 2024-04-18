@@ -1,0 +1,19 @@
+namespace: ibb
+image:
+  repository: gcr.io/padi-staging/github.com/cnscp/cns-dapr
+  tag: 7d2b8c9cab7f57503c6f5d582becf98353c5b49b
+
+dapr:
+  appPort: 3000
+  logLevel: debug
+
+ibbAuthentication:
+  contextSecret: ibb-authorization
+  contextKey: id
+  tokenSecret: ibb-authorzation
+  tokenKey: token
+
+redis:
+  serviceAddress: redis.default.svc.cluster.local
+  servicePort: 6379
+  password: ""

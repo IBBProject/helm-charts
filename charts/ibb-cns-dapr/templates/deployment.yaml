@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ibb-cns-dapr
+  namespace: {{ .Values.namespace }}
+  labels:
+    name: ibb-cns-dapr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ibb-cns-dapr
+  template:
+    metadata:
+      labels:
+        app: "ibb-cns-dapr"
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-port: {{ .Values.dapr.appPort | quote }}
+        dapr.io/app-id: "ibb-cns-dapr"
+        dapr.io/log-level: "{{ .Values.dapr.logLevel }}"
+    spec:
+      serviceAccountName: kubecns
+      containers:
+        - name: ibb-cns-dapr
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+          - containerPort: 3000
+          env:
+          - name: CNS_CONTEXT
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.ibbAuthentication.contextSecret }}
+                value: {{ .Values.ibbAuthentication.contextKey}}
+          - name: CNS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.ibbAuthentication.tokenSecret }}
+                value: {{ .Values.ibbAuthentication.tokenKey}}
+

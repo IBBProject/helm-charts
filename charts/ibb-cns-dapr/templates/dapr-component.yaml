@@ -1,0 +1,14 @@
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: cns-pubsub
+  namespace: default
+spec:
+  type: pubsub.redis
+  version: v1
+  metadata:
+  - name: redisHost
+    value: {{ .Values.redis.host }}:{{ .Values.redis.port }}
+  - name: redisPassword
+    value: {{ .Values.redis.password }}
