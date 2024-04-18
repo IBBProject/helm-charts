@@ -148,6 +148,16 @@ entries:
   ibb-cns-dapr:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-04-18T03:52:13.095782497Z"
+    description: A Helm chart installing CNS-Dapr on an IBB
+    digest: f26f8ee14c7cd408d41576f0118ccf71048e82aa02a0f90e75e2d5db3317660b
+    name: ibb-cns-dapr
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/ibb-cns-dapr-0.1.1/ibb-cns-dapr-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-04-18T03:39:24.695705261Z"
     description: A Helm chart installing CNS-Dapr on an IBB
     digest: 89680ab50fc5b0707443bc8a196f52d9a028d7d846f6be87a529c0fc1356db73
@@ -182,4 +192,4 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-traefik-0.2.0/ibb-traefik-0.2.0.tgz
     version: 0.2.0
-generated: "2024-04-18T03:39:24.695726391Z"
+generated: "2024-04-18T03:52:13.095817453Z"
