@@ -3,7 +3,7 @@ apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
   name: cns-pubsub
-  namespace: default
+  namespace: {{ .Values.namespace }}
 spec:
   type: pubsub.redis
   version: v1

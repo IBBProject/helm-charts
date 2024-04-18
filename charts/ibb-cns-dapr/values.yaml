@@ -1,8 +1,8 @@
 namespace: ibb
 serviceAccountName: default
 image:
-  repository: gcr.io/padi-staging/github.com/cnscp/cns-dapr
-  tag: 7d2b8c9cab7f57503c6f5d582becf98353c5b49b
+  repository: us-central1-docker.pkg.dev/padi-staging/public/cns-dapr
+  tag: latest
 
 dapr:
   appPort: 3000
@@ -11,7 +11,7 @@ dapr:
 ibbAuthentication:
   contextSecret: ibb-authorization
   contextKey: id
-  tokenSecret: ibb-authorzation
+  tokenSecret: ibb-authorization
   tokenKey: token
 
 redis:
