@@ -21,7 +21,7 @@ spec:
         dapr.io/app-id: "ibb-cns-dapr"
         dapr.io/log-level: "{{ .Values.dapr.logLevel }}"
     spec:
-      serviceAccountName: kubecns
+      serviceAccountName: {{ .Values.serviceAccountName }}
       containers:
         - name: ibb-cns-dapr
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}

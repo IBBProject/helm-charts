@@ -1,4 +1,5 @@
 namespace: ibb
+serviceAccountName: default
 image:
   repository: gcr.io/padi-staging/github.com/cnscp/cns-dapr
   tag: 7d2b8c9cab7f57503c6f5d582becf98353c5b49b
