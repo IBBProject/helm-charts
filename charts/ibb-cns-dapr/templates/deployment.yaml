@@ -32,10 +32,10 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.ibbAuthentication.contextSecret }}
-                value: {{ .Values.ibbAuthentication.contextKey}}
+                key: {{ .Values.ibbAuthentication.contextKey}}
           - name: CNS_TOKEN
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.ibbAuthentication.tokenSecret }}
-                value: {{ .Values.ibbAuthentication.tokenKey}}
+                key: {{ .Values.ibbAuthentication.tokenKey}}
 
