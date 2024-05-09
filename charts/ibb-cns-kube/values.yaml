@@ -1,0 +1,19 @@
+namespace: ibb
+serviceAccountName: default
+image:
+  repository: us-central1-docker.pkg.dev/padi-staging/public/cns-kube
+  tag: latest
+
+ibbCnsKube:
+  appPort: 3001
+  helmPath: "/usr/local/bin/helm"
+
+
+dapr:
+  logLevel: debug
+
+ibbAuthentication:
+  contextSecret: ibb-authorization
+  contextKey: id
+  tokenSecret: ibb-authorization
+  tokenKey: token

@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ibb-cns-kube
+  namespace: {{ .Values.namespace }}
+  labels:
+    name: ibb-cns-kube
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ibb-cns-kube
+  template:
+    metadata:
+      labels:
+        app: "ibb-cns-kube"
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-port: {{ .Values.ibbCnsKube.appPort | quote }}
+        dapr.io/app-id: "ibb-cns-kube"
+        dapr.io/log-level: "{{ .Values.dapr.logLevel }}"
+    spec:
+      serviceAccountName: {{ .Values.serviceAccountName }}
+      containers:
+        - name: ibb-cns-kube
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+          - containerPort: {{ .Values.ibbCnsKube.appPort }}
+          env:
+          - name: CNS_CONTEXT
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.ibbAuthentication.contextSecret }}
+                key: {{ .Values.ibbAuthentication.contextKey}}
+          - name: HELM_BINARY_PATH
+            value: {{ .Values.ibbCnsKube.helmPath | default "/usr/local/bin/helm" | quote }}
