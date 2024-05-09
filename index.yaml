@@ -196,6 +196,17 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-cns-dapr-0.1.0/ibb-cns-dapr-0.1.0.tgz
     version: 0.1.0
+  ibb-cns-kube:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-05-09T01:05:19.988199855Z"
+    description: A Helm chart installing CNS-Kube on an IBB
+    digest: d7e5e1178f87ab0fdcdc34fd04c35a61036855a2efcfb6018fa6ab542fb1d6c1
+    name: ibb-cns-kube
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/ibb-cns-kube-0.1.0/ibb-cns-kube-0.1.0.tgz
+    version: 0.1.0
   ibb-redis:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -222,4 +233,4 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-traefik-0.2.0/ibb-traefik-0.2.0.tgz
     version: 0.2.0
-generated: "2024-04-18T04:17:46.528132732Z"
+generated: "2024-05-09T01:05:19.988765038Z"
