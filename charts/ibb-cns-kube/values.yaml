@@ -1,5 +1,5 @@
 namespace: ibb
-serviceAccountName: default
+serviceAccountName: ibb-cns-kube
 image:
   repository: us-central1-docker.pkg.dev/padi-staging/public/cns-kube
   tag: latest
