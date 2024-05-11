@@ -33,5 +33,7 @@ spec:
               secretKeyRef:
                 name: {{ .Values.ibbAuthentication.contextSecret }}
                 key: {{ .Values.ibbAuthentication.contextKey}}
+          - name: CNS_DAPR
+            value: ibb-cns-dapr
           - name: HELM_BINARY_PATH
             value: {{ .Values.ibbCnsKube.helmPath | default "/usr/local/bin/helm" | quote }}
