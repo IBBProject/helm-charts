@@ -199,6 +199,16 @@ entries:
   ibb-cns-kube:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-05-11T20:25:20.430564518Z"
+    description: A Helm chart installing CNS-Kube on an IBB
+    digest: e1e3390103e98f09a3ba21635a836f9bdc05c72f0a0ecb613e11632b906607fa
+    name: ibb-cns-kube
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/ibb-cns-kube-0.1.2/ibb-cns-kube-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-05-09T02:34:57.253622354Z"
     description: A Helm chart installing CNS-Kube on an IBB
     digest: b7c85bf3b820d7d9f094ce8e279e35cc5e0143a85d79cb60df5b78c41972b0a2
@@ -243,4 +253,4 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-traefik-0.2.0/ibb-traefik-0.2.0.tgz
     version: 0.2.0
-generated: "2024-05-09T02:34:57.253664112Z"
+generated: "2024-05-11T20:25:20.430614581Z"
