@@ -1,0 +1,86 @@
+#
+# This deployment is for the deployment of the Tumblr Kubernets Sidecar
+# Injector. It will deploy the pods necessary to mutate the Kubernetes API
+# via webooks to automagically inject pods into a continer.
+#
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "ibb-ktunnel-sidecar-injector"
+  namespace: {{ .Values.namespace }}
+  labels:
+    com.ibbproject/app: "ibb-ktunnel-sidecar-injector"
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      com.ibbproject/app: "ibb-ktunnel-sidecar-injector"
+  template:
+    metadata:
+      labels:
+        com.ibbproject/app: ibb-ktunnel-sidecar-injector
+    spec:
+      serviceAccountName: ibb-ktunnel-sidecar-injector
+      volumes:
+      - name: secrets
+        secret:
+          secretName: ibb-ktunnel-sidecar-injector
+      - name: config
+        configMap:
+          name: ktunnel-config
+      containers:
+      - name: "ibb-ktunnel-sidecar-injector"
+        imagePullPolicy: Always
+        # The tumblr:latest image has a bug in it where the injector does 
+        # not properly inject the sidecar:
+        # https://github.com/tumblr/k8s-sidecar-injector/issues/61
+        # The mindovermiles262 image includes the yet-to-be-merged fix
+        # https://github.com/tumblr/k8s-sidecar-injector/pull/60
+        # image: tumblr/k8s-sidecar-injector:latest
+        image: mindovermiles262/sidecar-injector
+        command: ["entrypoint.sh"]
+        args: []
+        ports:
+        - name: https
+          containerPort: 9443
+        - name: http-metrics
+          containerPort: 9000
+        volumeMounts:
+        - name: secrets
+          mountPath: /var/lib/secrets
+        - name: config
+          mountPath: /config
+        livenessProbe:
+          httpGet:
+            scheme: HTTPS
+            path: /health
+            port: https
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          requests:
+            cpu: "0.5"
+            memory: 1Gi
+          limits:
+            cpu: "0.5"
+            memory: 2Gi
+        env:
+        - name: "TLS_CERT_FILE"
+          value: "/var/lib/secrets/sidecar-injector.crt"
+        - name: "TLS_KEY_FILE"
+          value: "/var/lib/secrets/sidecar-injector.key"
+        - name: "LOG_LEVEL"
+          value: "3"
+        - name: "CONFIG_DIR"
+          value: "conf/"
+        - name: "CONFIGMAP_LABELS"
+          value: "com.ibbproject/app=ibb-ktunnel-sidecar-injector"
+        - name: ANNOTATION_NAMESPACE
+          value: injector.ktunnel.ibbproject.com
