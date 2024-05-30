@@ -230,6 +230,16 @@ entries:
   ibb-ktunnel-injector:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-05-30T02:45:08.918114814Z"
+    description: A Helm chart for installing the KTunnel Sidecar Injector on an IBB
+    digest: 52fd5c09e9c0839d8aec47beb35ad989c6c1e6d7d44ba04cb211e186fbe926cc
+    name: ibb-ktunnel-injector
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/ibb-ktunnel-injector-0.1.1/ibb-ktunnel-injector-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-05-30T01:28:59.507034964Z"
     description: A Helm chart for installing the KTunnel Sidecar Injector on an IBB
     digest: a36524ad27866f7806cbe02286726bfac07f4d6773fe195a9ebbd74d44fc8441
@@ -264,4 +274,4 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-traefik-0.2.0/ibb-traefik-0.2.0.tgz
     version: 0.2.0
-generated: "2024-05-30T01:28:59.507073797Z"
+generated: "2024-05-30T02:45:08.918204714Z"
