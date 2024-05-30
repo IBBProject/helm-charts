@@ -1,0 +1,31 @@
+namespace: kube-system
+
+container:
+  image: "us-central1-docker.pkg.dev/padi-staging/public/ibb-ktunnel"
+  tag: "latest"
+
+caCrt: |
+  -----BEGIN CERTIFICATE-----
+  Your
+  Certificate
+  Goes
+  Here==
+  -----END CERTIFICATE-----
+
+sidecarInjectorCrt: |
+  -----BEGIN CERTIFICATE-----
+  Your
+  sidecar-injector.crt
+  certificate
+  goes
+  here==
+  -----END CERTIFICATE-----
+
+sidecarInjectorKey: |
+  -----BEGIN RSA PRIVATE KEY-----
+  Your
+  sidecar-injector.key
+  certificate
+  goes
+  here==
+  -----END RSA PRIVATE KEY-----
