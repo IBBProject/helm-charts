@@ -2,7 +2,7 @@ namespace: kube-system
 
 container:
   image: "us-central1-docker.pkg.dev/padi-staging/public/ibb-ktunnel"
-  tag: "latest"
+  tag: "be774cd"
 
 caCrt: |
   -----BEGIN CERTIFICATE-----
