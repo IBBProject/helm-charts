@@ -12,7 +12,7 @@ data:
     containers:
     - name: ktunnel
       image: {{ .Values.container.image }}:{{ .Values.container.tag }}
-      imagePullPolicy: {{ .Values.container.pullPolicy }}
+      imagePullPolicy: {{ .Values.container.imagePullPolicy }}
       volumeMounts:
         - mountPath: /root/.kube/
           name: kubeconfig
