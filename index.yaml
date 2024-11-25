@@ -227,6 +227,17 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-cns-kube-0.1.0/ibb-cns-kube-0.1.0.tgz
     version: 0.1.0
+  ibb-injector:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-11-25T01:07:54.045496594Z"
+    description: A Helm chart for adding a sidecar injector into your IBB cluster
+    digest: f3752236d370da673f68e971dfd806812ebb172dd718991dd63f98800e58ed36
+    name: ibb-injector
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/ibb-injector-0.0.1/ibb-injector-0.0.1.tgz
+    version: 0.0.1
   ibb-ktunnel-injector:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -304,4 +315,4 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-traefik-0.2.0/ibb-traefik-0.2.0.tgz
     version: 0.2.0
-generated: "2024-09-17T03:47:32.407314907Z"
+generated: "2024-11-25T01:07:54.045538041Z"
