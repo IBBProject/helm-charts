@@ -24,7 +24,23 @@ data:
     - name: piko
       image: {{ .Values.injection.container.image }}:{{ .Values.injection.container.tag }}
       imagePullPolicy: {{ .Values.injection.container.imagePullPolicy }}
-      volumeMounts:
-        - mountPath: /etc/podinfo
-          name: podinfo
+      command: ["piko"]
+      args:
+        - "agent"
+        - "http"
+        - "$(ENDPOINT_ID)"
+        - "$(ENDPOINT_ADDR)"
+        - "--config.path"
+        - "/etc/piko/agent.conf"
+        - "--connect.token"
+        - "TODO"
+      env:
+        - name: ENDPOINT_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['endpointId']
+        - name: ENDPOINT_ADDR 
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['endpointAddr']
 
