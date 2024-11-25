@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: injection-configs
+  namespace: {{ .Values.namespace }}
+  labels:
+    com.ibbproject/app: ibb-injector
+data:
+  # Annotate your pod to inject configurations:
+  #   `injector.tunnel.ibbproject.com/request: "sleep-sidecar"`
+  sleep.conf: |
+    name: sleep-sidecar
+    containers:
+    - name: ubuntu
+      image: ubuntu
+      command:
+        - "/bin/bash"
+        - "-c"
+        - "while true; do echo 'Ubuntu Sidecar is running...'; sleep 30; done"
+  piko.conf: |
+    name: piko-sidecar
+    containers:
+    - name: piko
+      image: {{ .Values.injection.container.image }}:{{ .Values.injection.container.tag }}
+      imagePullPolicy: {{ .Values.injection.container.imagePullPolicy }}
+      volumeMounts:
+        - mountPath: /etc/podinfo
+          name: podinfo
+
