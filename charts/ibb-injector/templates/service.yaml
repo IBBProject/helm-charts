@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ibb-injector
+  namespace: kube-system
+  labels:
+    com.ibbproject/app: ibb-injector
+spec:
+  type: ClusterIP
+  ports:
+  - name: https
+    port: 443
+    targetPort: https
+    protocol: TCP
+  - name: http-metrics
+    port: 80
+    targetPort: http-metrics
+    protocol: TCP
+  selector:
+    com.ibbproject/app: "ibb-injector"

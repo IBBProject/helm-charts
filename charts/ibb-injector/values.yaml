@@ -1,0 +1,44 @@
+namespace: kube-system
+
+injection:
+  container:
+    image: "us-central1-docker.pkg.dev/padi-staging/public/ibb-tunnel"
+    tag: "latest"
+    imagePullPolicy: "Always"
+
+injector:
+  container:
+    # The tumblr:latest image has a bug in it where the injector does 
+    # not properly inject the sidecar: https://github.com/tumblr/k8s-sidecar-injector/issues/61
+    # The mindovermiles262 image includes the yet-to-be-merged fix
+    # https://github.com/tumblr/k8s-sidecar-injector/pull/60
+    image: "mindovermiles262/sidecar-injector"  # tumblr/k8s-sidecar-injector:latest
+    tag: "latest"
+    imagePullPolicy: "Always"
+    command: 
+      - "entrypoint.sh"
+  caCrt: |
+    -----BEGIN CERTIFICATE-----
+    Your
+    Certificate
+    Goes
+    Here==
+    -----END CERTIFICATE-----
+
+  sidecarInjectorCrt: |
+    -----BEGIN CERTIFICATE-----
+    Your
+    sidecar-injector.crt
+    certificate
+    goes
+    here==
+    -----END CERTIFICATE-----
+
+  sidecarInjectorKey: |
+    -----BEGIN RSA PRIVATE KEY-----
+    Your
+    sidecar-injector.key
+    certificate
+    goes
+    here==
+    -----END RSA PRIVATE KEY-----
