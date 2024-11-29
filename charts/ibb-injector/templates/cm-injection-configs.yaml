@@ -22,25 +22,15 @@ data:
     name: piko-sidecar
     containers:
     - name: piko
-      image: {{ .Values.injection.container.image }}:{{ .Values.injection.container.tag }}
-      imagePullPolicy: {{ .Values.injection.container.imagePullPolicy }}
-      command: ["piko"]
-      args:
-        - "agent"
-        - "http"
-        - "$(ENDPOINT_ID)"
-        - "$(ENDPOINT_ADDR)"
-        - "--config.path"
-        - "/etc/piko/agent.conf"
-        - "--connect.token"
-        - "TODO"
-      env:
-        - name: ENDPOINT_ID
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.labels['endpointId']
-        - name: ENDPOINT_ADDR 
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.labels['endpointAddr']
+      image: us-central1-docker.pkg.dev/padi-staging/public/ibb-tunnel:latest
+      imagePullPolicy: Always
+      volumeMounts:
+        - mountPath: /etc/podinfo
+          name: podinfo
+        - mountPath: /etc/piko/mnt
+          name: piko-token
+    volumes:
+      - name: piko-token
+        secret:
+          secretName: piko-token
 

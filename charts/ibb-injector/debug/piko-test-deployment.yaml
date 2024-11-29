@@ -2,9 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: piko-test-deployment
-  labels:
-    app: nginx
-    tunnelId: "deployment"
 spec:
   replicas: 1
   selector:
@@ -14,9 +11,10 @@ spec:
     metadata:
       annotations:
         injector.tunnel.ibbproject.com/request: "piko-sidecar"
+        injector.tunnel.ibbproject.com/tunnelId: "piko-test"
+        injector.tunnel.ibbproject.com/tunnelExposePort: "80"
       labels:
         app: nginx
-        tunnelId: "pod"
     spec:
       containers:
       - name: nginx
@@ -27,9 +25,6 @@ spec:
         - name: podinfo
           downwardAPI:
             items:
-            - path: "labels"
-              fieldRef:
-                fieldPath: metadata.labels
             - path: "annotations"
               fieldRef:
                 fieldPath: metadata.annotations
