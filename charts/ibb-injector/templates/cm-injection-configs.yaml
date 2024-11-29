@@ -22,9 +22,15 @@ data:
     name: piko-sidecar
     containers:
     - name: piko
-      image: {{ .Values.injection.container.image }}:{{ .Values.injection.container.tag }}
-      imagePullPolicy: {{ .Values.injection.container.imagePullPolicy }}
+      image: us-central1-docker.pkg.dev/padi-staging/public/ibb-tunnel:latest
+      imagePullPolicy: Always
       volumeMounts:
         - mountPath: /etc/podinfo
           name: podinfo
+        - mountPath: /etc/piko/mnt
+          name: piko-token
+    volumes:
+      - name: piko-token
+        secret:
+          secretName: piko-token
 
