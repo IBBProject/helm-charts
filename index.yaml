@@ -230,6 +230,16 @@ entries:
   ibb-injector:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-11-29T20:17:11.39868773Z"
+    description: A Helm chart for adding a sidecar injector into your IBB cluster
+    digest: baa027e85b18ef269a080a2f6f21b4e0636e743f51059041e80a6b2b81224723
+    name: ibb-injector
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/ibb-injector-0.0.2/ibb-injector-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-11-25T01:07:54.045496594Z"
     description: A Helm chart for adding a sidecar injector into your IBB cluster
     digest: f3752236d370da673f68e971dfd806812ebb172dd718991dd63f98800e58ed36
@@ -315,4 +325,4 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-traefik-0.2.0/ibb-traefik-0.2.0.tgz
     version: 0.2.0
-generated: "2024-11-25T01:07:54.045538041Z"
+generated: "2024-11-29T20:17:11.398742903Z"
