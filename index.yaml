@@ -76,6 +76,16 @@ entries:
   ibb-application:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2025-01-09T04:01:43.249552708Z"
+    description: A Helm chart for a generic IBB application
+    digest: 1b3e16a3bb722e7e2412e2c092ecb63e89c88f7adfa7430272a80a6597fb3ed9
+    name: ibb-application
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/ibb-application-0.4.0/ibb-application-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-01-19T04:02:01.593969826Z"
     description: A Helm chart for a generic IBB application
     digest: 18f518138a98af3510ebf296254bcbba7755ed8923bb2bbbb06224d5ef3da320
@@ -325,4 +335,4 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-traefik-0.2.0/ibb-traefik-0.2.0.tgz
     version: 0.2.0
-generated: "2024-11-29T20:17:11.398742903Z"
+generated: "2025-01-09T04:01:43.249617039Z"
