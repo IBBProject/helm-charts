@@ -11,7 +11,7 @@ kube-prometheus-stack:
       - name: podinfo
         downwardAPI:
           items:
-           path: "annotations"
+            path: "annotations"
             fieldRef:
               fieldPath: metadata.annotations
     podAnnotations:
