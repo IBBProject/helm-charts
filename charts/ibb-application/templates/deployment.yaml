@@ -14,8 +14,8 @@ spec:
       annotations:
       {{- if .Values.tunnel.enabled }}
         injector.tunnel.ibbproject.com/request: {{ .Values.tunnel.sidecarConfig | quote }}
-        injector.tunnel.ibbproject.com/id: "{{ .Values.tunnel.id }}"
-        injector.tunnel.ibbproject.com/port: "{{ .Values.service.port }}"
+        injector.tunnel.ibbproject.com/tunnelId: "{{ .Values.tunnel.id }}"
+        injector.tunnel.ibbproject.com/tunnelExposePort: "{{ .Values.service.port }}"
       {{- end }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
