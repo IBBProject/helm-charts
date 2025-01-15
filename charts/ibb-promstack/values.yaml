@@ -1,0 +1,29 @@
+kube-prometheus-stack:
+  grafana:
+    grafana.ini:
+      security:
+        allow_embedding: true
+        cookie_secure: true
+        cookie_samesite: "none"
+      auth.anonymous:
+        enabled: true
+    extraContainerVolumes:
+      - name: podinfo
+        downwardAPI:
+          items:
+           path: "annotations"
+            fieldRef:
+              fieldPath: metadata.annotations
+    podAnnotations:
+      injector.tunnel.ibbproject.com/request: $INJECTOR_REQUEST
+      injector.tunnel.ibbproject.com/tunnelId: "$PADI_ID"
+      injector.tunnel.ibbproject.com/tunnelExposePort: "3000"
+    extraSecretMounts:
+      - name: token
+        secretName: piko-token
+        mountPath: /etc/piko/mnt
+    securityContext:
+      runAsNonRoot: false
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
