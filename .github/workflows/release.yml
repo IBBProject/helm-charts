@@ -22,6 +22,8 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
           helm repo add traefik https://traefik.github.io/charts
+          helm repo add sidecar-injector https://opensource.expediagroup.com/kubernetes-sidecar-injector
+          helm repo add promcom https://prometheus-community.github.io/helm-charts
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0 
