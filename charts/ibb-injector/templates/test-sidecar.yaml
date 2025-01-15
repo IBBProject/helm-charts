@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-sidecar
+  namespace: {{ .Values.injection.namespace }}
+data:
+  sidecars.yaml: |
+    - name: test-sidecar
+      containers:
+        - name: webserver
+          image: nginx

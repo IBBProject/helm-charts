@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        injector.tunnel.ibbproject.com/request: "test-sidecar"
+        # injector.tunnel.ibbproject.com/request: "ibb-tunnel"
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+      # volumes:
+      #   - name: podinfo
+      #     downwardAPI:
+      #       items:
+      #       - path: "annotations"
+      #         fieldRef:
+      #           fieldPath: metadata.annotations
