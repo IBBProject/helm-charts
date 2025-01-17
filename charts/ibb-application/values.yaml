@@ -16,7 +16,7 @@ tunnel:
   id: "ID"
   # The name of the sidecar config from the ktunnel sidecar injector
   # configuration
-  sidecarConfig: "piko-sidecar"
+  sidecarConfig: "ibb-tunnel"
   # The name of the k8s secret that contains the Piko JWT
   jwtSecretName: "piko-token"
 
