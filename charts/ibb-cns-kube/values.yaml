@@ -2,6 +2,7 @@ namespace: ibb
 serviceAccountName: ibb-cns-kube
 image:
   repository: us-central1-docker.pkg.dev/padi-staging/public/cns-kube
+  pullPolicy: Always
   tag: latest
 
 ibbCnsKube:

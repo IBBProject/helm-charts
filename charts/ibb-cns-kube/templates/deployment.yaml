@@ -25,6 +25,7 @@ spec:
       containers:
         - name: ibb-cns-kube
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
           - containerPort: {{ .Values.ibbCnsKube.appPort }}
           env:
