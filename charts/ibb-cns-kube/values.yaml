@@ -1,5 +1,7 @@
-namespace: ibb
+amespace: ibb
 serviceAccountName: ibb-cns-kube
+rollPods: true
+
 image:
   repository: us-central1-docker.pkg.dev/padi-staging/public/cns-kube
   pullPolicy: Always
