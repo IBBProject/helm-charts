@@ -53,8 +53,9 @@ spec:
       {{- if .Values.tunnel.enabled }}
       volumes:
         - name: token
-          secretName: {{ .Values.tunnel.jwtSecretName }}
-          mountPath: /etc/piko/mnt
+          secret:
+            secretName: {{ .Values.tunnel.jwtSecretName }}
+            #mountPath: /etc/piko/mnt
         - name: podinfo
           downwardAPI:
             items:
