@@ -1,4 +1,4 @@
-amespace: ibb
+namespace: ibb
 serviceAccountName: ibb-cns-kube
 rollPods: true
 
