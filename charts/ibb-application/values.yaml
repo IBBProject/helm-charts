@@ -4,6 +4,9 @@
 
 replicaCount: 1
 
+deployment:
+  rollPods: true
+
 image:
   repository: us-central1-docker.pkg.dev/padi-staging/public/april-8080
   pullPolicy: IfNotPresent

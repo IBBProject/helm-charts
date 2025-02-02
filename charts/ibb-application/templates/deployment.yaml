@@ -17,6 +17,9 @@ spec:
         injector.tunnel.ibbproject.com/tunnelId: "{{ .Values.tunnel.id }}"
         injector.tunnel.ibbproject.com/tunnelExposePort: "{{ .Values.service.port }}"
       {{- end }}
+      {{- if .Values.deployment.rollPods }}
+        rollme: {{ randAlphaNum 5 | quote }} 
+      {{- end }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}

@@ -20,7 +20,7 @@ spec:
         dapr.io/app-port: {{ .Values.ibbCnsKube.appPort | quote }}
         dapr.io/app-id: "ibb-cns-kube"
         dapr.io/log-level: "{{ .Values.dapr.logLevel }}"
-        {{ if .Values.rollPods }}
+        {{ if .Values.deployment.rollPods }}
         rollme: {{ randAlphaNum 5 | quote }} 
         {{ end }}
     spec:

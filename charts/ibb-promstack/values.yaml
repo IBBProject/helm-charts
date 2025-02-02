@@ -18,6 +18,7 @@ kube-prometheus-stack:
       injector.tunnel.ibbproject.com/request: $INJECTOR_REQUEST
       injector.tunnel.ibbproject.com/tunnelId: "$PADI_ID"
       injector.tunnel.ibbproject.com/tunnelExposePort: "3000"
+      rollme: "JSGUVOFLSS" 
     extraSecretMounts:
       - name: token
         secretName: piko-token
