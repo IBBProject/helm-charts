@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ibb-cns-haystack
+  namespace: {{ .Values.namespace }}
+  labels:
+    name: ibb-cns-haystack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ibb-cns-haystack
+  template:
+    metadata:
+      labels:
+        app: "ibb-cns-haystack"
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-port: {{ .Values.ibbCnsHaystack.appPort | quote }}
+        dapr.io/app-id: "ibb-cns-haystack"
+        dapr.io/log-level: "{{ .Values.dapr.logLevel }}"
+        {{ if .Values.deployment.rollPods }}
+        rollme: {{ randAlphaNum 5 | quote }} 
+        {{ end }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccountName }}
+      containers:
+        - name: ibb-cns-haystack
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+          - containerPort: {{ .Values.ibbCnsHaystack.appPort }}
+          env:
+          - name: CNS_CONTEXT
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.ibbAuthentication.contextSecret }}
+                key: {{ .Values.ibbAuthentication.contextKey}}
+          - name: CNS_DAPR_APP_ID
+            value: ibb-cns-dapr
