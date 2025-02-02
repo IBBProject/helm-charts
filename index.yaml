@@ -246,6 +246,17 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-cns-dapr-0.1.0/ibb-cns-dapr-0.1.0.tgz
     version: 0.1.0
+  ibb-cns-haystack:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2025-02-02T18:36:28.66932147Z"
+    description: A Helm chart installing CNS-Haystack on an IBB
+    digest: ede26810fb3cde27d7d4572bca1772b1426ea8253ba7a590a4ea258431f7e1e8
+    name: ibb-cns-haystack
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/ibb-cns-haystack-0.0.1/ibb-cns-haystack-0.0.1.tgz
+    version: 0.0.1
   ibb-cns-kube:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -468,4 +479,4 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-traefik-0.2.0/ibb-traefik-0.2.0.tgz
     version: 0.2.0
-generated: "2025-02-02T17:36:28.563551436Z"
+generated: "2025-02-02T18:36:28.669392804Z"
