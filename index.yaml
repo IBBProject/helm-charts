@@ -76,6 +76,16 @@ entries:
   ibb-application:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2025-02-02T17:36:28.31648516Z"
+    description: A Helm chart for a generic IBB application
+    digest: de8ce32c182c117005feb66da4b79c294359cedc3d5f348eb03c4870e6dcd602
+    name: ibb-application
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/ibb-application-1.2.0/ibb-application-1.2.0.tgz
+    version: 1.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-01-30T15:40:26.7644313Z"
     description: A Helm chart for a generic IBB application
     digest: 1d6c79e96189756c3e1ae59ffe71ef7195ebb98898325d26f0095a463bf1431b
@@ -239,6 +249,16 @@ entries:
   ibb-cns-kube:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2025-02-02T17:36:28.416258809Z"
+    description: A Helm chart installing CNS-Kube on an IBB
+    digest: 5d98d63abba6716e514a449d7a80fa335a1106a4a141fa94da2108f7d8592fef
+    name: ibb-cns-kube
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/ibb-cns-kube-1.0.4/ibb-cns-kube-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-01-30T23:31:30.018996098Z"
     description: A Helm chart installing CNS-Kube on an IBB
     digest: 664f795029334306ae3b5df95d76d2483e671118d3f2ea77f72d4bf71638b18d
@@ -396,6 +416,20 @@ entries:
   ibb-promstack:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2025-02-02T17:36:28.563451069Z"
+    dependencies:
+    - name: kube-prometheus-stack
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 67.9.0
+    description: A Helm chart for installing Prometheus & Grafana on an IBB
+    digest: 4490fbb24dc23c2dd403dd6c86e1ec58b71fc9f021845d20eaa5249636e652ed
+    name: ibb-promstack
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/ibb-promstack-0.2.0/ibb-promstack-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-01-15T06:20:58.865251344Z"
     dependencies:
     - name: kube-prometheus-stack
@@ -434,4 +468,4 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-traefik-0.2.0/ibb-traefik-0.2.0.tgz
     version: 0.2.0
-generated: "2025-01-30T23:31:30.019047695Z"
+generated: "2025-02-02T17:36:28.563551436Z"
