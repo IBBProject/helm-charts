@@ -14,6 +14,16 @@ entries:
   edge-central:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2025-02-05T16:12:43.311339997Z"
+    description: A Helm chart for installing Edge Central to an IBB
+    digest: 1e1fae5dc276b151d2f973f7d50f7f28ae3c08c4db728f54f8a9103089e60be9
+    name: edge-central
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/edge-central-1.0.0/edge-central-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-01-19T04:02:01.473825103Z"
     description: A Helm chart for installing Edge Central to an IBB
     digest: 7f9757dae2f67813aed1023e9743173498453f27fbff033931306e059f2288e7
@@ -499,4 +509,4 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-traefik-0.2.0/ibb-traefik-0.2.0.tgz
     version: 0.2.0
-generated: "2025-02-05T15:52:10.766582522Z"
+generated: "2025-02-05T16:12:43.311447368Z"
