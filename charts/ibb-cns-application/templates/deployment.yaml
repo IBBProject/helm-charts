@@ -12,8 +12,13 @@ spec:
   template:
     metadata:
       annotations:
-      {{- if .Values.ktunnel.enabled }}
-        injector.ktunnel.ibbproject.com/request: {{ .Values.ktunnel.sidecarConfig | quote }}
+      {{- if .Values.tunnel.enabled }}
+        injector.tunnel.ibbproject.com/request: {{ .Values.tunnel.sidecarConfig | quote }}
+        injector.tunnel.ibbproject.com/tunnelId: "{{ .Values.tunnel.id }}"
+        injector.tunnel.ibbproject.com/tunnelExposePort: "{{ .Values.service.port }}"
+      {{- end }}
+      {{- if .Values.deployment.rollPods }}
+        rollme: {{ randAlphaNum 5 | quote }} 
       {{- end }}
       {{- if .Values.cnsDapr.enabled }}
         dapr.io/enabled: {{ .Values.cnsDapr.enabled | quote }}
@@ -25,10 +30,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- if .Values.ktunnel.enabled }}
-        injector.ktunnel.ibbproject.com/id: "{{ .Values.ktunnel.id }}"
-        injector.ktunnel.ibbproject.com/port: "{{ .Values.service.port }}"
-        {{- end }}
         {{- include "ibb-application.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -77,17 +78,14 @@ spec:
           - name: CNS_SERVER_PORT
             value: "{{ .Values.cnsDapr.appPort }}"
         {{- end }}
-      {{- if .Values.ktunnel.enabled }}
+      {{- if .Values.tunnel.enabled }}
       volumes:
-        - name: kubeconfig
+        - name: token
           secret:
-            secretName: {{ .Values.ktunnel.kubeconfigSecretName }}
+            secretName: {{ .Values.tunnel.jwtSecretName }}
         - name: podinfo
           downwardAPI:
             items:
-            - path: "labels"
-              fieldRef:
-                fieldPath: metadata.labels
             - path: "annotations"
               fieldRef:
                 fieldPath: metadata.annotations

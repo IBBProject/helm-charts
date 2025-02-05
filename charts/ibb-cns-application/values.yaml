@@ -4,6 +4,9 @@
 
 replicaCount: 1
 
+deployment:
+  rollPods: True
+
 image:
   repository: us-central1-docker.pkg.dev/padi-staging/public/april-8080
   pullPolicy: IfNotPresent
@@ -24,16 +27,16 @@ cnsDapr:
     port: 3500
 
 
-ktunnel:
+tunnel:
   enabled: false
   # The Padi ID or Context ID. This will be set via cns-kube if installed.
   id: "ID"
   # The name of the sidecar config from the ktunnel sidecar injector
   # configuration
-  sidecarConfig: "ibb-ktunnel"
+  sidecarConfig: "ibb-tunnel"
   # The name of the secret on the cluster which holds the information
   # on connecting to the upstream kubernetes cluster
-  kubeconfigSecretName: "kubeconfig"
+  kubeconfigSecretName: "piko-token"
 
 imagePullSecrets: []
 nameOverride: ""
