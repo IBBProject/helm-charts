@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  license: {{ .Values.image.licenseKey | b64enc | quote}}
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: {{ .Values.images.licenseSecretName }}

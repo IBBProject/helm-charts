@@ -10,6 +10,7 @@ deployment:
 images:
   pullPolicy: IfNotPresent
   licenseSecretName: edgecentral-license
+  licenseKey: "license-key"
 
 tunnel:
   enabled: false
