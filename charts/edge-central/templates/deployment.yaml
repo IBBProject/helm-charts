@@ -286,7 +286,6 @@ spec:
             defaultMode: 420
             secretName: {{ .Values.images.licenseSecretName }}
       {{- if .Values.tunnel.enabled }}
-      volumes:
         - name: token
           secret:
             secretName: {{ .Values.tunnel.jwtSecretName }}
