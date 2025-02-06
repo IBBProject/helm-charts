@@ -52,6 +52,10 @@ spec:
             value: "{{ .Values.cnsDapr.cnsPubsub }}"
           - name: CNS_CONTEXT
             value: "{{ .Values.cnsDapr.cnsContext }}"
+          {{- range $key, $value := .Values.image.env }}
+          - name: {{ $key }}
+            value: {{ $value }}
+          {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

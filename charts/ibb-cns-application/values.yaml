@@ -12,6 +12,9 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
+  # Set ENV variables for the image
+  # env:
+  #   key: "value"
 
 cnsDapr:
   enabled: "True"
