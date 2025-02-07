@@ -237,6 +237,16 @@ entries:
   ibb-cns-application:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2025-02-07T05:25:37.290935499Z"
+    description: A Helm chart for a cns-dapr-client application
+    digest: f119f99fc705a051deab89d6e85b9658d749d987af409a9cc32711da9813fda7
+    name: ibb-cns-application
+    type: application
+    urls:
+    - https://github.com/IBBProject/helm-charts/releases/download/ibb-cns-application-1.2.0/ibb-cns-application-1.2.0.tgz
+    version: 1.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-02-06T03:30:12.694459755Z"
     description: A Helm chart for a cns-dapr-client application
     digest: 7549b543c81e197ffb1d255c7cd190b1ec4727c8f6d3d2704050dab4b1f73d9d
@@ -569,4 +579,4 @@ entries:
     urls:
     - https://github.com/IBBProject/helm-charts/releases/download/ibb-traefik-0.2.0/ibb-traefik-0.2.0.tgz
     version: 0.2.0
-generated: "2025-02-06T03:57:25.471960211Z"
+generated: "2025-02-07T05:25:37.291031529Z"
