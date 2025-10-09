@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.cnscp.name }}
+spec:
+  selector:
+    app: {{ .Values.cnscp.name }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.cnscp.servicePort }}
+      targetPort: {{ .Values.cnscp.containerPort }}
+
