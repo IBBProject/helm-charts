@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.etcd.name }}
+  labels:
+    app: {{ .Values.etcd.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.etcd.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.etcd.name }}
+    spec:
+      containers:
+      - name: {{ .Values.etcd.containerName }}
+        image: {{ .Values.etcd.imageRepository }}:{{ .Values.etcd.imageTag }}
+        ports:
+        - containerPort: {{ .Values.etcd.servicePort }}
+          name: service
+        {{- if .Values.etcd.peerPort }}
+        - containerPort: {{ .Values.etcd.peerPort }}
+          name: peer
+        {{- end }}
+        command:
+        - /usr/local/bin/etcd
+        args:
+        {{- if .Values.etcd.args }}
+        {{- range .Values.etcd.args }}
+          - "--{{ .arg }}"
+          - "{{ .value }}"
+        {{- end }}
+        {{- end }}
+        env:
+        {{- if .Values.etcd.env }}
+        {{- range .Values.etcd.env }}
+          - name: {{ .name }}
+            value: {{ .value | quote }}
+        {{- end }}
+        {{- end }}
+        volumeMounts:
+        - name: "{{ .Values.etcd.name }}-vol"
+          mountPath: {{ .Values.etcd.dataMountPoint }}
+      volumes:
+      - name: "{{ .Values.etcd.name }}-vol"
+        persistentVolumeClaim:
+          claimName: "{{ .Values.etcd.name }}-pvc"
+

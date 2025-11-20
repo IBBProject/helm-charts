@@ -1,0 +1,14 @@
+apiVersion: v2
+name: Arete
+version: 0.1.0
+description: Install Arete on your Kubernetes Cluster
+dependencies: # A list of the chart requirements (optional)
+  - name: arete-cli
+    version: ~0.1.0
+    repository: "file://./../arete-cli"
+  - name: arete-etcd
+    version: ~0.1.0
+    repository: "file://./../arete-etcd"
+  - name: arete-orchestrator
+    version: ~0.1.0
+    repository: "file://./../arete-orchestrator"

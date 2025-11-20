@@ -1,0 +1,12 @@
+dependencies:
+- name: arete-cli
+  repository: file://./../arete-cli
+  version: 0.1.0
+- name: arete-etcd
+  repository: file://./../arete-etcd
+  version: 0.1.0
+- name: arete-orchestrator
+  repository: file://./../arete-orchestrator
+  version: 0.1.0
+digest: sha256:20061af6ae7e470bd23bce5308b2519a7b0570137196b5a9d2589a76de0fcf2f
+generated: "2025-11-19T21:13:43.556395805-07:00"

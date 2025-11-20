@@ -1,0 +1,53 @@
+{{- if .Values.etcd.istioGateway.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: "{{ .Values.etcd.name }}-gateway"
+spec:
+  selector:
+    {{ .Values.etcd.istioGateway.selectorKey }}: {{ .Values.etcd.istioGateway.selectorValue }}
+  servers:
+  - port:
+      number: {{ .Values.etcd.istioGateway.serviceIngressPort }}
+      name: "{{ .Values.etcd.name }}-client"
+      protocol: TCP
+      {{- if .Values.etcd.istioGateway.peerIngressPort }}
+      number: {{ .Values.etcd.istioGateway.peerIngressPort }}
+      name: "{{ .Values.etcd.name }}-peer"
+      protocol: TCP
+      {{- end }}
+    hosts:
+    {{- range .Values.etcd.istioGateway.hosts }}
+      - {{ . | quote }}
+    {{- end }}
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: "{{ .Values.etcd.name }}-vs"
+spec:
+  hosts:
+  {{- range .Values.etcd.istioGateway.hosts }}
+    - {{ . | quote }}
+  {{- end }}
+  gateways:
+  - "{{ .Values.etcd.name }}-gateway"
+  tcp:
+  - match:
+    - port: {{ .Values.etcd.istioGateway.serviceIngressPort }}
+    route:
+    - destination:
+        host: {{ .Values.etcd.name }} # Service
+        port:
+          number: {{ .Values.etcd.servicePort }}
+  {{- if .Values.etcd.istioGateway.peerIngressPort }}
+  - match:
+    - port: {{ .Values.etcd.istioGateway.peerIngressPort }}
+    route:
+    - destination:
+        host: {{ .Values.etcd.name }} # Service
+        port:
+          number: {{ .Values.etcd.peerPort }}
+  {{- end }}
+{{- end }}

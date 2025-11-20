@@ -1,0 +1,30 @@
+---
+orchestrator:
+  name: orchestrator
+  serviceAccountName: orchestrator
+  imageRepository: us-central1-docker.pkg.dev/padi-staging/cnscp/cns-corchestrator
+  imageTag: latest
+  pullPolicy: Always
+  replicas: 1
+  config:
+    - name: CNS_HOST
+      value: "http://etcd.cns.dev"
+    - name: CNS_PORT
+      value: 2379
+    - name: CNS_USERNAME
+      value: username
+    - name: CNS_PASSWORD
+      value: password
+    - name: CNS_PROFILES
+      value: "https://cp.padi.io/profiles"
+
+  # Additional Environment variables can go here
+  #
+  # env:
+  #   - name: 
+  #     value: 
+
+  # If rollPods is set to True, it will create a randAlphaNum annotation
+  # which is used to roll the pods on each deploy
+  #
+  # rollPods: false

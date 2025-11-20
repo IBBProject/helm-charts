@@ -1,0 +1,37 @@
+etcd:
+  name: arete-etcd
+  containerName: arete-etcd
+  imageRepository: quay.io/coreos/etcd
+  imageTag: 'v3.5.0'
+  servicePort: 2379
+  peerPort: 2380
+  args:
+    - arg: "name"
+      value: "arete-etcd-0"
+    - arg: "listen-client-urls"
+      value: "http://0.0.0.0:2379"
+    - arg: "advertise-client-urls"
+      value: "http://0.0.0.0:2379"
+    - arg: "data-dir"
+      value: "/etcd-data"
+  dataMountPoint: "/etcd-data"
+  env:
+    # - name: foo
+    #   value: bar
+
+  istioGateway:
+    enabled: true
+    selectorKey: istio
+    selectorValue: ingressGateway
+    serviceIngressPort: 2379
+    peerIngressPort: 2380
+    hosts:
+      - "*"
+  
+  pvc:
+    enabled: true
+    storageClassName: standard
+    accessModes:
+      - ReadWriteOnce
+    volumeSize: 1Gi
+

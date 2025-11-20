@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.cnscp.name }}
+  labels:
+    name: {{ .Values.cnscp.name }}
+spec:
+  replicas: {{ .Values.cnscp.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.cnscp.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.cnscp.name }}
+      annotations:
+        {{ if .Values.cnscp.rollPods }}
+        rollme: {{ randAlphaNum 5 | quote }} 
+        {{ end }}
+    spec:
+      serviceAccountName: {{ .Values.cnscp.serviceAccountName }}
+      containers:
+        - name: {{ .Values.cnscp.name }}
+          image: {{ .Values.cnscp.imageRepository }}:{{ .Values.cnscp.imageTag }}
+          imagePullPolicy: {{ .Values.cnscp.pullPolicy }}
+          env:
+          {{- range .Values.cnscp.config }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+          {{- end }}
+          {{ if .Values.cnscp.env }}
+          {{- range .Values.cnscp.env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+          {{- end }}
+          {{ end }}
+          ports:
+            - containerPort: {{ .Values.cnscp.containerPort }}

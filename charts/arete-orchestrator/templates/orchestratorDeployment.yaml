@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.orchestrator.name }}
+  labels:
+    name: {{ .Values.orchestrator.name }}
+spec:
+  replicas: {{ .Values.orchestrator.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.orchestrator.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.orchestrator.name }}
+      annotations:
+        {{ if .Values.orchestrator.rollPods }}
+        rollme: {{ randAlphaNum 5 | quote }} 
+        {{ end }}
+    spec:
+      serviceAccountName: {{ .Values.orchestrator.serviceAccountName }}
+      containers:
+        - name: {{ .Values.orchestrator.name }}
+          image: {{ .Values.orchestrator.imageRepository }}:{{ .Values.orchestrator.imageTag }}
+          imagePullPolicy: {{ .Values.orchestrator.pullPolicy }}
+          env:
+          {{- range .Values.orchestrator.config }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+          {{- end }}
+          {{ if .Values.orchestrator.env }}
+          {{- range .Values.orchestrator.env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+          {{- end }}
+          {{ end }}

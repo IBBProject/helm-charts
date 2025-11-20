@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.etcd.name }}
+  labels:
+    app: {{ .Values.etcd.name }}
+spec:
+  ports:
+  - port: {{ .Values.etcd.servicePort }}
+    targetPort: {{ .Values.etcd.servicePort }}
+    name: "{{ .Values.etcd.name }}-client"
+  - port: {{ .Values.etcd.peerPort }}
+    targetPort: {{ .Values.etcd.peerPort }}
+    name: "{{ .Values.etcd.name }}-peer"
+  selector:
+    app: {{ .Values.etcd.name }}
