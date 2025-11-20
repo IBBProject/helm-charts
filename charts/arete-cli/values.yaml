@@ -1,0 +1,29 @@
+cnscp:
+  name: cnscp
+  serviceAccountName: cnscp
+  imageRepository: us-central1-docker.pkg.dev/padi-staging/cnscp/cns-cli
+  imageTag: latest
+  pullPolicy: Always
+  replicas: 1
+  containerPort: 8080
+  servicePort: 8080
+  config:
+    - name: CNS_HOST
+      value: "127.0.0.1"
+    - name: CNS_PORT
+      value: 2379
+    - name: CNS_USERNAME
+      value: username
+    - name: CNS_PASSWORD
+      value: password
+    - name: CNS_PROFILES
+      value: "https://cp.padi.io/profiles"
+  env:
+  # Additional Environment variables can go here
+  #   - name: 
+  #     value: 
+
+  # If rollPods is set to True, it will create a randAlphaNum annotation
+  # which is used to roll the pods on each deploy
+  
+  # rollPods: false

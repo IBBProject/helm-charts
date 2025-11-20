@@ -1,0 +1,15 @@
+{{- if .Values.etcd.pvc.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "{{ .Values.etcd.name }}-pvc"
+spec:
+  storageClassName: {{ .Values.etcd.pvc.storageClassName }}
+  accessModes:
+    {{- range .Values.etcd.pvc.accessModes }}
+    - {{ . }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.etcd.pvc.volumeSize }}
+{{- end }}

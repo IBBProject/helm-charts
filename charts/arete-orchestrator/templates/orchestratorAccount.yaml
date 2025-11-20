@@ -4,4 +4,3 @@ kind: ServiceAccount
 apiVersion: v1
 metadata:
   name: {{ .Values.orchestrator.serviceAccountName }}
-  namespace: {{ .Values.namespace }}
