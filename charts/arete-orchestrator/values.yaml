@@ -2,21 +2,18 @@
 orchestrator:
   name: orchestrator
   serviceAccountName: orchestrator
-  imageRepository: us-central1-docker.pkg.dev/padi-staging/cnscp/cns-corchestrator
+  imageRepository: us-central1-docker.pkg.dev/padi-staging/cnscp/cns-orchestrator
   imageTag: latest
   pullPolicy: IfNotPresent
   imagePullSecrets:
     - artifact-registry-secret
+  credentialsSecretRef: arete-etcd-user-credentials
   replicas: 1
   config:
     - name: CNS_HOST
-      value: "http://etcd.cns.dev"
+      value: "http://arete-etcd"
     - name: CNS_PORT
       value: 2379
-    - name: CNS_USERNAME
-      value: username
-    - name: CNS_PASSWORD
-      value: password
     - name: CNS_PROFILES
       value: "https://cp.padi.io/profiles"
 
