@@ -12,7 +12,7 @@ cnscp:
     - artifact-registry-secret
   config:
     - name: CNS_HOST
-      value: "127.0.0.1"
+      value: "http://arete-etcd"
     - name: CNS_PORT
       value: 2379
     - name: CNS_PROFILES
