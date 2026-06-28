@@ -1,0 +1,55 @@
+{{- if .Values.etcd.configureUsers }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: etcd-init-auth
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: setup
+        image: {{ .Values.etcd.imageRepository }}:{{ .Values.etcd.imageTag }}
+        env:
+          - name: ETCD_ENDPOINT
+            value: "http://{{ .Values.etcd.name }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.etcd.servicePort }}"
+          - name: ETCD_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ printf "%s-root-credentials" .Values.etcd.name }}
+                key: ETCD_ROOT_PASSWORD
+          - name: CNS_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ printf "%s-user-credentials" .Values.etcd.name }}
+                key: CNS_USERNAME
+          - name: CNS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ printf "%s-user-credentials" .Values.etcd.name }}
+                key: CNS_PASSWORD
+        command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Waiting for etcd to be ready..."
+          until etcdctl --endpoints=$ETCD_ENDPOINT endpoint health; do sleep 2; done
+
+          echo "Creating role 'root'..."
+          etcdctl --endpoints=$ETCD_ENDPOINT role add root
+
+          echo "Creating users..."
+          etcdctl --endpoints=$ETCD_ENDPOINT user add root:$ETCD_ROOT_PASSWORD
+          etcdctl --endpoints=$ETCD_ENDPOINT user add $CNS_USERNAME:$CNS_PASSWORD
+
+          echo "Granting 'root' role to users..."
+          etcdctl --endpoints=$ETCD_ENDPOINT user grant-role root root
+          etcdctl --endpoints=$ETCD_ENDPOINT user grant-role $CNS_USERNAME root
+
+          echo "Enabling authentication..."
+          etcdctl --endpoints=$ETCD_ENDPOINT auth enable
+{{- end }}

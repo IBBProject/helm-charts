@@ -15,6 +15,10 @@ etcd:
     - arg: "data-dir"
       value: "/etcd-data"
   dataMountPoint: "/etcd-data"
+  configureUsers: true
+  username: "padi"
+  userPassword: ""
+  rootPassword: ""
   env:
     # - name: foo
     #   value: bar

@@ -29,11 +29,25 @@ spec:
             - name: {{ .name }}
               value: {{ .value | quote }}
           {{- end }}
-          {{ if .Values.cnscp.env }}
+          {{- if .Values.cnscp.credentialsSecretRef }}
+            {{- if lookup "v1" "Secret" .Release.Namespace .Values.cnscp.credentialsSecretRef }}
+            - name: CNS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.cnscp.credentialsSecretRef }}
+                  key: CNS_USERNAME
+            - name: CNS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.cnscp.credentialsSecretRef }}
+                  key: CNS_PASSWORD
+            {{- end }}
+          {{- end }}
+          {{- if .Values.cnscp.env }}
           {{- range .Values.cnscp.env }}
             - name: {{ .name }}
               value: {{ .value | quote }}
           {{- end }}
-          {{ end }}
+          {{- end }}
           ports:
             - containerPort: {{ .Values.cnscp.containerPort }}

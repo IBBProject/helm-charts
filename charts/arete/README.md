@@ -10,3 +10,9 @@ $ helm dependency update
 ```
 
 Save and commit the changes with the packaged dependencies
+
+Use
+
+```
+helm upgrade --install --set arete-etcd.etcd.istioGateway.enabled=false my-arete arete/arete
+```
