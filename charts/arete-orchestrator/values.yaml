@@ -4,7 +4,9 @@ orchestrator:
   serviceAccountName: orchestrator
   imageRepository: us-central1-docker.pkg.dev/padi-staging/cnscp/cns-corchestrator
   imageTag: latest
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
+  imagePullSecrets:
+    - artifact-registry-secret
   replicas: 1
   config:
     - name: CNS_HOST

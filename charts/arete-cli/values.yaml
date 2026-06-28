@@ -9,7 +9,7 @@ cnscp:
   servicePort: 8080
   credentialsSecretRef: arete-etcd-user-credentials
   imagePullSecrets:
-    - gcr-pull-secret
+    - artifact-registry-secret
   config:
     - name: CNS_HOST
       value: "127.0.0.1"

@@ -10,5 +10,5 @@ dependencies: # A list of the chart requirements (optional)
     version: ~0.2.0
     repository: "file://./../arete-etcd"
   - name: arete-orchestrator
-    version: ~0.1.0
+    version: ~0.2.0
     repository: "file://./../arete-orchestrator"
