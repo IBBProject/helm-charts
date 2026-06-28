@@ -31,7 +31,6 @@ spec:
               value: {{ .value | quote }}
           {{- end }}
           {{- if .Values.cnscp.credentialsSecretRef }}
-            {{- if lookup "v1" "Secret" .Release.Namespace .Values.cnscp.credentialsSecretRef }}
             - name: CNS_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -42,7 +41,6 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.cnscp.credentialsSecretRef }}
                   key: CNS_PASSWORD
-            {{- end }}
           {{- end }}
           {{- if .Values.cnscp.env }}
           {{- range .Values.cnscp.env }}

@@ -31,7 +31,6 @@ spec:
               value: {{ .value | quote }}
           {{- end }}
           {{- if .Values.orchestrator.credentialsSecretRef }}
-            {{- if lookup "v1" "Secret" .Release.Namespace .Values.orchestrator.credentialsSecretRef }}
             - name: CNS_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -42,7 +41,6 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.orchestrator.credentialsSecretRef }}
                   key: CNS_PASSWORD
-            {{- end }}
           {{- end }}
           {{ if .Values.orchestrator.env }}
           {{- range .Values.orchestrator.env }}
