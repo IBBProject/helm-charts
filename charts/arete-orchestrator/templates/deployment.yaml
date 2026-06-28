@@ -25,6 +25,9 @@ spec:
         - name: {{ .Values.orchestrator.name }}
           image: {{ .Values.orchestrator.imageRepository }}:{{ .Values.orchestrator.imageTag }}
           imagePullPolicy: {{ .Values.orchestrator.pullPolicy }}
+          {{- if .Values.orchestrator.command }}
+          command: {{ .Values.orchestrator.command | toJson }}
+          {{- end }}
           env:
           {{- range .Values.orchestrator.config }}
             - name: {{ .name }}

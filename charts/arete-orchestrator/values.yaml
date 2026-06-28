@@ -2,12 +2,14 @@
 orchestrator:
   name: orchestrator
   serviceAccountName: orchestrator
-  imageRepository: us-central1-docker.pkg.dev/padi-staging/cnscp/cns-orchestrator
-  imageTag: latest
+  imageRepository: us-central1-docker.pkg.dev/padi-80910/cnscp-preprod/cns-orchestrator
+  imageTag: staging
   pullPolicy: IfNotPresent
   imagePullSecrets:
     - artifact-registry-secret
+    - padi-artifact-hub
   credentialsSecretRef: arete-etcd-user-credentials
+  command: ["node", "index", "--debug"]
   replicas: 1
   config:
     - name: CNS_HOST

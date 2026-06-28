@@ -7,6 +7,7 @@ cnscp:
   replicas: 1
   containerPort: 8080
   servicePort: 8080
+  # command: ["node", "index", "dashboard", "--debug"]
   credentialsSecretRef: arete-etcd-user-credentials
   imagePullSecrets:
     - artifact-registry-secret

@@ -37,12 +37,17 @@ spec:
         - /bin/sh
         - -c
         - |
+          echo "Details:"
+          echo "  ENDPOINT: $ETCD_ENDPOINT"
+          echo "  CNS_USERNAME: $CNS_USERNAME"
+          echo ""
           echo "Checking if auth is already enabled..."
-          if etcdctl --endpoints=$ETCD_ENDPOINT auth status 2>&1 | grep -q "Authentication Status: true"; then
+          AUTH_STATUS=$(etcdctl --endpoints=$ETCD_ENDPOINT auth status 2>&1)
+          if echo "$AUTH_STATUS" | grep -q "Authentication Status: true" || echo "$AUTH_STATUS" | grep -q "user name is empty"; then
             echo "Auth already enabled, exiting."
             exit 0
           fi
-          
+
           echo "Waiting for etcd to be ready..."
           until etcdctl --endpoints=$ETCD_ENDPOINT endpoint health; do sleep 2; done
 

@@ -25,6 +25,9 @@ spec:
         - name: {{ .Values.cnscp.name }}
           image: {{ .Values.cnscp.imageRepository }}:{{ .Values.cnscp.imageTag }}
           imagePullPolicy: {{ .Values.cnscp.pullPolicy }}
+          {{- if .Values.cnscp.command }}
+          command: {{ .Values.cnscp.command | toJson }}
+          {{- end }}
           env:
           {{- range .Values.cnscp.config }}
             - name: {{ .name }}
