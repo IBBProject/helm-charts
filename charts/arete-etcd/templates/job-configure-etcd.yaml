@@ -37,14 +37,15 @@ spec:
         - /bin/sh
         - -c
         - |
-          echo "Waiting for etcd to be ready..."
-          until etcdctl --endpoints=$ETCD_ENDPOINT endpoint health; do sleep 2; done
-
           echo "Checking if auth is already enabled..."
           if etcdctl --endpoints=$ETCD_ENDPOINT auth status 2>&1 | grep -q "Authentication Status: true"; then
             echo "Auth already enabled, exiting."
             exit 0
           fi
+          
+          echo "Waiting for etcd to be ready..."
+          until etcdctl --endpoints=$ETCD_ENDPOINT endpoint health; do sleep 2; done
+
 
           echo "Creating role 'root'..."
           etcdctl --endpoints=$ETCD_ENDPOINT role add root
