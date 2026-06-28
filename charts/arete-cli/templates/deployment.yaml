@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.cnscp.name }}
+  namespace: {{ .Release.Namespace }}
   labels:
     name: {{ .Values.cnscp.name }}
 spec:
