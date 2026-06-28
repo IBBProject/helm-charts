@@ -1,12 +1,12 @@
 dependencies:
 - name: arete-cli
   repository: file://./../arete-cli
-  version: 0.2.2
+  version: 0.2.3
 - name: arete-etcd
   repository: file://./../arete-etcd
-  version: 0.2.0
+  version: 0.2.1
 - name: arete-orchestrator
   repository: file://./../arete-orchestrator
-  version: 0.2.2
-digest: sha256:ffd49d1b522c0f1a1a2df140bb107a7aa68582526f4137b0016aea04be770aac
-generated: "2026-06-27T18:07:49.298678406-07:00"
+  version: 0.2.3
+digest: sha256:e6031265792e7f2f95ab8f8dd9498587f1c419889b3bf7e1b99636154d36de7f
+generated: "2026-06-27T18:16:52.568347316-07:00"
